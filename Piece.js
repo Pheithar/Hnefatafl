@@ -6,6 +6,8 @@ class Piece {
 
     this.previous_pos_x = this.pos_x;
     this.previous_pos_y = this.pos_y;
+
+    this.type = normalPiece;
   }
 
   show() {
@@ -17,15 +19,79 @@ class Piece {
   getPossibleCells() {
 
     var possibleCells = [];
-    for (var i = 0; i < boardSize; i++) {
-      for (var j = 0; j < boardSize; j++) {
-        if ((i == this.pos_x || j == this.pos_y) && !(i == this.pos_x && j == this.pos_y)) {
-          possibleCells.push([i, j]);
-        }
+    var blocked = false;
+    for (var i = this.pos_x+1; i < boardSize; i++) {
+      if (!(board.getPosition([i, this.pos_y]) || blocked)) {
+        possibleCells.push([i, this.pos_y]);
+      }
+      else if (board.getPosition([i, this.pos_y])) {
+        blocked = true;
+      }
+    }
+
+    blocked = false;
+    for (var i = this.pos_x-1; i >= 0; i--) {
+      if (!(board.getPosition([i, this.pos_y]) || blocked)) {
+        possibleCells.push([i, this.pos_y]);
+      }
+      else if (board.getPosition([i, this.pos_y])) {
+        blocked = true;
+      }
+    }
+
+    blocked = false;
+    for (var i = this.pos_y+1; i < boardSize; i++) {
+      if (!(board.getPosition([this.pos_x, i]) || blocked)) {
+        possibleCells.push([this.pos_x, i]);
+      }
+      else if (board.getPosition([this.pos_x, i])) {
+        blocked = true;
+      }
+    }
+
+    blocked = false;
+    for (var i = this.pos_y-1; i >= 0; i--) {
+      if (!(board.getPosition([this.pos_x, i]) || blocked)) {
+        possibleCells.push([this.pos_x, i]);
+      }
+      else if (board.getPosition([this.pos_x, i])) {
+        blocked = true;
       }
     }
 
     return possibleCells;
   }
 
+  checkCapture() {
+
+    if (this.pos_x+2 < boardSize && board.getTeamPosition([this.pos_x+1, this.pos_y]) != this.team && board.getTeamPosition([this.pos_x+1, this.pos_y]) != emptyCell && (board.getTeamPosition([this.pos_x+2, this.pos_y]) == this.team || board.getTeamPosition([this.pos_x+2, this.pos_y]) == hostileCell) && board.getPieceAt([this.pos_x+1, this.pos_y]).type == normalPiece) {
+          board.captureAt([this.pos_x+1, this.pos_y]);
+    }
+
+    if (this.pos_x-2 >= 0 && board.getTeamPosition([this.pos_x-1, this.pos_y]) != this.team && board.getTeamPosition([this.pos_x-1, this.pos_y]) != emptyCell && (board.getTeamPosition([this.pos_x-2, this.pos_y]) == this.team || board.getTeamPosition([this.pos_x-2, this.pos_y]) == hostileCell) && board.getPieceAt([this.pos_x-1, this.pos_y]).type == normalPiece) {
+      board.captureAt([this.pos_x-1, this.pos_y]);
+    }
+
+    if (this.pos_y+2 < boardSize && board.getTeamPosition([this.pos_x, this.pos_y+1]) != this.team && board.getTeamPosition([this.pos_x, this.pos_y+1]) != emptyCell && (board.getTeamPosition([this.pos_x, this.pos_y+2]) == this.team || board.getTeamPosition([this.pos_x, this.pos_y+2]) == hostileCell) && board.getPieceAt([this.pos_x, this.pos_y+1]).type == normalPiece) {
+      board.captureAt([this.pos_x, this.pos_y+1]);
+    }
+
+    if (this.pos_y-2 >= 0 && board.getTeamPosition([this.pos_x, this.pos_y-1]) != this.team && board.getTeamPosition([this.pos_x, this.pos_y-1]) != emptyCell && (board.getTeamPosition([this.pos_x, this.pos_y-2]) == this.team || board.getTeamPosition([this.pos_x, this.pos_y-2]) == hostileCell) && board.getPieceAt([this.pos_x, this.pos_y-1]).type == normalPiece) {
+      board.captureAt([this.pos_x, this.pos_y-1]);
+    }
+  }
+}
+
+class King extends Piece {
+  constructor(pos_x, pos_y) {
+    super(defendTeam, pos_x, pos_y);
+
+    this.type = kingPiece;
+  }
+
+  show() {
+    textAlign(CENTER, CENTER);
+    fill(0)
+    text(this.team + "K", this.pos_x * tileSize + borderSize + tileSize/2, this.pos_y * tileSize + borderSize + tileSize/2)
+  }
 }

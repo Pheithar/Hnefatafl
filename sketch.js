@@ -3,8 +3,12 @@ var boardSize = 13
 var borderSize = 50
 
 var attackTeam = "A";
-var defendTeam= "D";
+var defendTeam = "D";
+var emptyCell = "-";
+var hostileCell = "H";
 
+var normalPiece = "normal";
+var kingPiece = "king";
 var board;
 
 var locked;
@@ -101,8 +105,14 @@ function mouseReleased() {
       if (canPlace) {
         selectedPiece.pos_x = x_pos
         selectedPiece.pos_y = y_pos
+
+        board.updatePosition([selectedPiece.previous_pos_x, selectedPiece.previous_pos_y], [selectedPiece.pos_x, selectedPiece.pos_y], selectedPiece.team)
+
         selectedPiece.previous_pos_x = x_pos;
         selectedPiece.previous_pos_y = y_pos;
+
+        selectedPiece.checkCapture();
+        board.checkKing()
       }
       else {
         selectedPiece.pos_x = selectedPiece.previous_pos_x;
