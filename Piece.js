@@ -21,7 +21,7 @@ class Piece {
     var possibleCells = [];
     var blocked = false;
     for (var i = this.pos_x+1; i < boardSize; i++) {
-      if (!(board.getPosition([i, this.pos_y]) || blocked)) {
+      if (!(board.getPosition([i, this.pos_y]) || blocked) || (this.type == kingPiece && board.board[i][this.pos_y] == hostileCell)) {
         possibleCells.push([i, this.pos_y]);
       }
       else if (board.getPosition([i, this.pos_y])) {
@@ -31,7 +31,7 @@ class Piece {
 
     blocked = false;
     for (var i = this.pos_x-1; i >= 0; i--) {
-      if (!(board.getPosition([i, this.pos_y]) || blocked)) {
+      if (!(board.getPosition([i, this.pos_y]) || blocked) || (this.type == kingPiece && board.board[i][this.pos_y] == hostileCell)) {
         possibleCells.push([i, this.pos_y]);
       }
       else if (board.getPosition([i, this.pos_y])) {
@@ -41,7 +41,7 @@ class Piece {
 
     blocked = false;
     for (var i = this.pos_y+1; i < boardSize; i++) {
-      if (!(board.getPosition([this.pos_x, i]) || blocked)) {
+      if (!(board.getPosition([this.pos_x, i]) || blocked) || (this.type == kingPiece && board.board[this.pos_x][i] == hostileCell)) {
         possibleCells.push([this.pos_x, i]);
       }
       else if (board.getPosition([this.pos_x, i])) {
@@ -51,7 +51,7 @@ class Piece {
 
     blocked = false;
     for (var i = this.pos_y-1; i >= 0; i--) {
-      if (!(board.getPosition([this.pos_x, i]) || blocked)) {
+      if (!(board.getPosition([this.pos_x, i]) || blocked) || (this.type == kingPiece && board.board[this.pos_x][i] == hostileCell)) {
         possibleCells.push([this.pos_x, i]);
       }
       else if (board.getPosition([this.pos_x, i])) {

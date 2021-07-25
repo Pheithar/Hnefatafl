@@ -8,7 +8,12 @@ class Board {
     for (var i = 0; i < boardSize; i++) {
       this.board.push([]);
       for (var j = 0; j < boardSize; j++) {
-        this.board[i].push(emptyCell);
+        if ((i == 0 && j == 0) || (i == 0 && j == boardSize-1) || (i == boardSize-1 && j == 0) || (i == boardSize-1 && j == boardSize-1) || (i == throne[0] && j == throne[1])) {
+          this.board[i].push(hostileCell);
+        }
+        else {
+          this.board[i].push(emptyCell);
+        }
       }
     }
 
@@ -16,13 +21,50 @@ class Board {
   }
 
   setupPieces() {
-    this.addPiece(attackTeam, [0, 0]);
-    this.addPiece(attackTeam, [0, 1]);
-    this.addPiece(attackTeam, [1, 1]);
-    this.addPiece(attackTeam, [2, 1]);
-    this.addPiece(defendTeam, [4, 0]);
-    this.addPiece(defendTeam, [5, 0]);
-    this.addKing([3, 3]);
+    this.addPiece(attackTeam, [0, 3]);
+    this.addPiece(attackTeam, [0, 4]);
+    this.addPiece(attackTeam, [0, 5]);
+    this.addPiece(attackTeam, [1, 5]);
+    this.addPiece(attackTeam, [0, 6]);
+    this.addPiece(attackTeam, [0, 7]);
+
+    this.addPiece(attackTeam, [3, 0]);
+    this.addPiece(attackTeam, [4, 0]);
+    this.addPiece(attackTeam, [5, 0]);
+    this.addPiece(attackTeam, [5, 1]);
+    this.addPiece(attackTeam, [6, 0]);
+    this.addPiece(attackTeam, [7, 0]);
+
+    this.addPiece(attackTeam, [10, 3]);
+    this.addPiece(attackTeam, [10, 4]);
+    this.addPiece(attackTeam, [10, 5]);
+    this.addPiece(attackTeam, [9, 5]);
+    this.addPiece(attackTeam, [10, 6]);
+    this.addPiece(attackTeam, [10, 7]);
+
+    this.addPiece(attackTeam, [3, 10]);
+    this.addPiece(attackTeam, [4, 10]);
+    this.addPiece(attackTeam, [5, 10]);
+    this.addPiece(attackTeam, [5, 9]);
+    this.addPiece(attackTeam, [6, 10]);
+    this.addPiece(attackTeam, [7, 10]);
+
+    this.addPiece(defendTeam, [5, 3]);
+    this.addPiece(defendTeam, [5, 4]);
+    this.addPiece(defendTeam, [5, 6]);
+    this.addPiece(defendTeam, [5, 7]);
+
+    this.addPiece(defendTeam, [3, 5]);
+    this.addPiece(defendTeam, [4, 5]);
+    this.addPiece(defendTeam, [6, 5]);
+    this.addPiece(defendTeam, [7, 5]);
+
+    this.addPiece(defendTeam, [4, 4]);
+    this.addPiece(defendTeam, [4, 6]);
+    this.addPiece(defendTeam, [6, 4]);
+    this.addPiece(defendTeam, [6, 6]);
+
+    this.addKing([5, 5]);
   }
 
   addPiece(team, position) {
@@ -44,7 +86,18 @@ class Board {
   }
 
   updatePosition(previousPosition, newPosition, team) {
-    this.board[previousPosition[0]][previousPosition[1]] = emptyCell;
+
+    if (this.getPieceAt(newPosition) != null && this.getPieceAt(newPosition).type == kingPiece && this.board[newPosition[0]][newPosition[1]] == hostileCell && newPosition[0] != throne[0] && newPosition[1] != throne[1]) {
+      console.log("END");
+      endGame()
+    }
+
+    if (previousPosition[0] == throne[0] && previousPosition[1] == throne[1]) {
+      this.board[previousPosition[0]][previousPosition[1]] = hostileCell;
+    }
+    else {
+      this.board[previousPosition[0]][previousPosition[1]] = emptyCell;
+    }
     this.board[newPosition[0]][newPosition[1]] = team;
   }
 
@@ -140,14 +193,11 @@ class Board {
     }
 
     if (surrounded == 4) {
-      console.log("Fin");
+      console.log("END");
+      endGame()
     }
 
 
-    //
-    // if ((this.king.pos_x+1 < boardSize && this.getPieceAt([this.king.pos_x+1, this.king.pos_y]).team != this.king.team)) {
-    //   console.log("AA");
-    // }
   }
 
 }
