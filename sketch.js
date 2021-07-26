@@ -1,6 +1,10 @@
 var tileSize = 50
 var boardSize = 11
 var borderSize = 100
+var consoleSize = 600;
+
+var cellH = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"];
+var cellV = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
 
 var attackTeam = "A";
 var defendTeam = "D";
@@ -11,6 +15,8 @@ var normalPiece = "normal";
 var kingPiece = "king";
 var board;
 
+var textLog;
+
 var locked;
 var selectedPiece;
 var possibleCells;
@@ -20,8 +26,12 @@ var throne = [Math.floor(boardSize/2), Math.floor(boardSize/2)]
 var currentTurn = attackTeam;
 
 function setup() {
-  createCanvas(tileSize * boardSize + 2 * borderSize, tileSize * boardSize + 2 * borderSize);
+  createCanvas(tileSize * boardSize + 2 * borderSize + consoleSize, tileSize * boardSize + 2 * borderSize);
   board = new Board();
+  textLog = new TextLog();
+
+  textLog.log.push("AAAAAA")
+
   locked = false;
   selectedPiece = null;
   possibleCells = [];
@@ -35,6 +45,7 @@ function resetBoard() {
   currentTurn = attackTeam;
 
   board = new Board();
+  textLog = new TextLog();
   locked = false;
   selectedPiece = null;
   possibleCells = [];
@@ -43,6 +54,7 @@ function resetBoard() {
 function draw() {
   drawBoard();
   board.show();
+  textLog.show();
 }
 
 function endGame() {
@@ -52,6 +64,21 @@ function endGame() {
 
 function drawBoard() {
   background(255, 204, 0);
+
+  for (var i = 0; i < cellH.length; i++) {
+    textSize(15)
+    textAlign(CENTER, BOTTOM)
+    fill(0)
+    text(cellH[i], borderSize + tileSize/2 + tileSize*i, borderSize-5)
+  }
+
+  for (var i = 0; i < cellV.length; i++) {
+    textSize(15)
+    textAlign(RIGHT, CENTER)
+    fill(0)
+    text(cellV[i], borderSize-5, borderSize + tileSize/2 + tileSize*i)
+  }
+
   for (var i = 0; i < boardSize; i++) {
     for (var j = 0; j < boardSize; j++) {
       if (throne[0] == i && throne[1] == j) {
@@ -62,7 +89,8 @@ function drawBoard() {
       }
       rect(i * tileSize + borderSize, j * tileSize + borderSize, tileSize, tileSize);
       if (board.board[i][j] == hostileCell) {
-
+        textAlign(CENTER, CENTER)
+        textSize(25);
         fill(255);
         text("H", i * tileSize + borderSize + tileSize/2, j * tileSize + borderSize + tileSize/2);
       }

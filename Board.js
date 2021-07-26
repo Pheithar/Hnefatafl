@@ -140,14 +140,14 @@ class Board {
   captureAt(position) {
     for (var i = 0; i < this.attackPieces.length; i++) {
       if (this.attackPieces[i].pos_x == position[0] && this.attackPieces[i].pos_y == position[1]) {
-        this.board[this.attackPieces[i].pos_x][this.attackPieces[i].pos_y] = emptyCell;
+        this.board[position[0]][position[1]] = emptyCell;
         this.attackPieces.splice(i, 1);
       }
     }
 
     for (var i = 0; i < this.defendPieces.length; i++) {
       if (this.defendPieces[i].pos_x == position[0] && this.defendPieces[i].pos_y == position[1]) {
-        this.board[this.attackPieces[i].pos_x][this.attackPieces[i].pos_y] = emptyCell;
+        this.board[position[0]][position[1]] = emptyCell;
         this.defendPieces.splice(i, 1);
       }
     }
