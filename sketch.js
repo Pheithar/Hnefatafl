@@ -30,8 +30,6 @@ function setup() {
   board = new Board();
   textLog = new TextLog();
 
-  textLog.log.push("AAAAAA")
-
   locked = false;
   selectedPiece = null;
   possibleCells = [];
@@ -186,6 +184,11 @@ function mouseReleased() {
         }
       }
       if (canPlace) {
+
+        var previousPosition = [selectedPiece.previous_pos_x, selectedPiece.previous_pos_y];
+
+        var newPosition = [x_pos, y_pos];
+
         selectedPiece.pos_x = x_pos
         selectedPiece.pos_y = y_pos
 
@@ -194,8 +197,11 @@ function mouseReleased() {
         selectedPiece.previous_pos_x = x_pos;
         selectedPiece.previous_pos_y = y_pos;
 
-        selectedPiece.checkCapture();
+        var captures = selectedPiece.checkCapture();
         board.checkKing()
+
+        newLog(previousPosition, newPosition, selectedPiece.team, captures);
+
         if (currentTurn != "END") {
           changeTurn();
         }
@@ -219,4 +225,23 @@ function changeTurn() {
   else {
     currentTurn = attackTeam;
   }
+}
+
+function newLog(previousPosition, newPosition, team, captures) {
+
+  message = team + ": (" + previousPosition[0] + ", " + previousPosition[1] + ") -> (" + newPosition[0] + ", " + newPosition[1] + ")."
+
+  if (captures.length > 0) {
+    message += " Captures: "
+  }
+
+  for (var i = 0; i < captures.length; i++) {
+    message += "(" + captures[i][0] + ", " + captures[i][1] + ")"
+
+    if (i < captures.length - 1) {
+      message += ", ";
+    }
+  }
+
+  textLog.log.push(message)
 }
