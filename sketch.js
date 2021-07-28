@@ -229,7 +229,7 @@ function changeTurn() {
 
 function newLog(previousPosition, newPosition, team, captures) {
 
-  message = team + ": (" + previousPosition[0] + ", " + previousPosition[1] + ") -> (" + newPosition[0] + ", " + newPosition[1] + ")."
+  message = team + ": (" + cellH[previousPosition[0]] + ", " + cellV[previousPosition[1]] + ") -> (" + cellH[newPosition[0]] + ", " + cellV[newPosition[1]] + ")."
 
   if (captures.length > 0) {
     message += " Captures: "
