@@ -23,16 +23,14 @@ var possibleCells;
 
 var throne = [Math.floor(boardSize/2), Math.floor(boardSize/2)]
 
-var currentTurn = attackTeam;
+var currentTurn;
+
+var bot;
 
 function setup() {
   createCanvas(tileSize * boardSize + 2 * borderSize + consoleSize, tileSize * boardSize + 2 * borderSize);
-  board = new Board();
-  textLog = new TextLog();
 
-  locked = false;
-  selectedPiece = null;
-  possibleCells = [];
+  resetBoard();
 
   var button = createButton('Reset Game');
   button.position(tileSize*boardSize, borderSize/2);
@@ -47,12 +45,15 @@ function resetBoard() {
   locked = false;
   selectedPiece = null;
   possibleCells = [];
+
+  bot = new Bot(attackTeam);
 }
 
 function draw() {
   drawBoard();
   board.show();
   textLog.show();
+  moveBot()
 }
 
 function endGame() {
@@ -183,7 +184,7 @@ function mouseReleased() {
           canPlace = true;
         }
       }
-      if (canPlace) {
+      if (canPlace && currentTurn != bot.team) {
 
         var previousPosition = [selectedPiece.previous_pos_x, selectedPiece.previous_pos_y];
 
@@ -236,7 +237,7 @@ function newLog(previousPosition, newPosition, team, captures) {
   }
 
   for (var i = 0; i < captures.length; i++) {
-    message += "(" + captures[i][0] + ", " + captures[i][1] + ")"
+    message += "(" + cellH[captures[i][0]] + ", " + cellV[captures[i][1]] + ")"
 
     if (i < captures.length - 1) {
       message += ", ";
@@ -244,4 +245,14 @@ function newLog(previousPosition, newPosition, team, captures) {
   }
 
   textLog.log.push(message)
+}
+
+
+function moveBot() {
+  if (currentTurn == bot.team) {
+    bot.movePiece()
+    if (currentTurn != "END") {
+      changeTurn();
+    }
+  }
 }

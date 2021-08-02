@@ -66,22 +66,23 @@ class Piece {
 
     var captures = [];
 
-    if (this.pos_x+2 < boardSize && board.getTeamPosition([this.pos_x+1, this.pos_y]) != this.team && board.getTeamPosition([this.pos_x+1, this.pos_y]) != emptyCell && (board.getTeamPosition([this.pos_x+2, this.pos_y]) == this.team || board.getTeamPosition([this.pos_x+2, this.pos_y]) == hostileCell) && board.getPieceAt([this.pos_x+1, this.pos_y]).type == normalPiece) {
+    if (this.pos_x+2 < boardSize && board.getTeamPosition([this.pos_x+1, this.pos_y]) != this.team && board.getTeamPosition([this.pos_x+1, this.pos_y]) != emptyCell && (board.getTeamPosition([this.pos_x+2, this.pos_y]) == this.team || board.getTeamPosition([this.pos_x+2, this.pos_y]) == hostileCell) && board.getPieceAt([this.pos_x+1, this.pos_y]) != null && board.getPieceAt([this.pos_x+1, this.pos_y]).type == normalPiece) {
           board.captureAt([this.pos_x+1, this.pos_y]);
           captures.push([this.pos_x+1, this.pos_y]);
     }
 
-    if (this.pos_x-2 >= 0 && board.getTeamPosition([this.pos_x-1, this.pos_y]) != this.team && board.getTeamPosition([this.pos_x-1, this.pos_y]) != emptyCell && (board.getTeamPosition([this.pos_x-2, this.pos_y]) == this.team || board.getTeamPosition([this.pos_x-2, this.pos_y]) == hostileCell) && board.getPieceAt([this.pos_x-1, this.pos_y]).type == normalPiece) {
+    if (this.pos_x-2 >= 0 && board.getTeamPosition([this.pos_x-1, this.pos_y]) != this.team && board.getTeamPosition([this.pos_x-1, this.pos_y]) != emptyCell && (board.getTeamPosition([this.pos_x-2, this.pos_y]) == this.team || board.getTeamPosition([this.pos_x-2, this.pos_y]) == hostileCell) && board.getPieceAt([this.pos_x-1, this.pos_y]) != null && board.getPieceAt([this.pos_x-1, this.pos_y]).type == normalPiece) {
       board.captureAt([this.pos_x-1, this.pos_y]);
       captures.push([this.pos_x-1, this.pos_y]);
     }
 
-    if (this.pos_y+2 < boardSize && board.getTeamPosition([this.pos_x, this.pos_y+1]) != this.team && board.getTeamPosition([this.pos_x, this.pos_y+1]) != emptyCell && (board.getTeamPosition([this.pos_x, this.pos_y+2]) == this.team || board.getTeamPosition([this.pos_x, this.pos_y+2]) == hostileCell) && board.getPieceAt([this.pos_x, this.pos_y+1]).type == normalPiece) {
+    if (this.pos_y+2 < boardSize && board.getTeamPosition([this.pos_x, this.pos_y+1]) != this.team && board.getTeamPosition([this.pos_x, this.pos_y+1]) != emptyCell && (board.getTeamPosition([this.pos_x, this.pos_y+2]) == this.team || board.getTeamPosition([this.pos_x, this.pos_y+2]) == hostileCell) && board.getPieceAt([this.pos_x, this.pos_y+1]) != null && board.getPieceAt([this.pos_x, this.pos_y+1]).type == normalPiece) {
       board.captureAt([this.pos_x, this.pos_y+1]);
       captures.push([this.pos_x, this.pos_y+1]);
     }
 
-    if (this.pos_y-2 >= 0 && board.getTeamPosition([this.pos_x, this.pos_y-1]) != this.team && board.getTeamPosition([this.pos_x, this.pos_y-1]) != emptyCell && (board.getTeamPosition([this.pos_x, this.pos_y-2]) == this.team || board.getTeamPosition([this.pos_x, this.pos_y-2]) == hostileCell) && board.getPieceAt([this.pos_x, this.pos_y-1]).type == normalPiece) {
+    if (this.pos_y-2 >= 0 && board.getTeamPosition([this.pos_x, this.pos_y-1]) != this.team && board.getTeamPosition([this.pos_x, this.pos_y-1]) != emptyCell && (board.getTeamPosition([this.pos_x, this.pos_y-2]) == this.team || board.getTeamPosition([this.pos_x, this.pos_y-2]) == hostileCell) &&
+    board.getPieceAt([this.pos_x, this.pos_y-1]) != null && board.getPieceAt([this.pos_x, this.pos_y-1]).type == normalPiece) {
       board.captureAt([this.pos_x, this.pos_y-1]);
       captures.push([this.pos_x, this.pos_y-1]);
     }
