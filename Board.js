@@ -196,8 +196,6 @@ class Board {
       console.log("END");
       endGame()
     }
-
-
   }
 
 }

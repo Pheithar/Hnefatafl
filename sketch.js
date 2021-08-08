@@ -27,6 +27,8 @@ var currentTurn;
 
 var bot;
 
+var animationVel = 1/2;
+
 function setup() {
   createCanvas(tileSize * boardSize + 2 * borderSize + consoleSize, tileSize * boardSize + 2 * borderSize);
 
@@ -203,6 +205,7 @@ function mouseReleased() {
 
         newLog(previousPosition, newPosition, selectedPiece.team, captures);
 
+
         if (currentTurn != "END") {
           changeTurn();
         }
@@ -251,8 +254,5 @@ function newLog(previousPosition, newPosition, team, captures) {
 function moveBot() {
   if (currentTurn == bot.team) {
     bot.movePiece()
-    if (currentTurn != "END") {
-      changeTurn();
-    }
   }
 }
