@@ -14,7 +14,7 @@ To capture an enemy *Soldier*, it has to be sandwiched between 2 of your pieces.
 
 But to capture the *King*, all 4 sides of it have to be covered.
 
-For more information about the rules, check out this webpage, that explains everything much better than I: [http://aagenielsen.dk/fetlar_rules_en.php]
+For more information about the rules, check out this webpage, that explains everything much better than I: <http://aagenielsen.dk/fetlar_rules_en.php>
 
 ## Credits
 
