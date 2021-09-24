@@ -1,7 +1,7 @@
-var tileSize = 50
-var boardSize = 11
-var borderSize = 100
-var consoleSize = 600;
+var tileSize = 64;
+var boardSize = 11;
+var borderSize = 75;
+var consoleSize = 700;
 
 var cellH = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"];
 var cellV = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
@@ -29,13 +29,27 @@ var bot;
 
 var animationVel = 1/2;
 
+var attackPieceImg;
+var defenPieceImg;
+var kingImg;
+
+function preload() {
+  attackPieceImg = loadImage("./assets/soldier-v1.png");
+  defendPieceImg = loadImage("./assets/soldier-v2.png");
+  kingImg = loadImage("./assets/king-v2.png");
+}
+
 function setup() {
-  createCanvas(tileSize * boardSize + 2 * borderSize + consoleSize, tileSize * boardSize + 2 * borderSize);
+  canvas = createCanvas(tileSize * boardSize + 2 * borderSize + consoleSize, tileSize * boardSize + 2 * borderSize);
+  console.log(canvas);
+
+  canvas.parent('sketch-holder');
 
   resetBoard();
 
   var button = createButton('Reset Game');
-  button.position(tileSize*boardSize, borderSize/2);
+  button.parent('sketch-holder');
+  button.position(textLog.position[0], borderSize/2);
   button.mousePressed(resetBoard);
 }
 
@@ -48,14 +62,14 @@ function resetBoard() {
   selectedPiece = null;
   possibleCells = [];
 
-  bot = new Bot(attackTeam);
+  // bot = new Bot(attackTeam);
 }
 
 function draw() {
   drawBoard();
   board.show();
   textLog.show();
-  moveBot()
+  // moveBot()
 }
 
 function endGame() {
@@ -110,18 +124,18 @@ function drawBoard() {
     turn = "Attack Team"
     fill(0);
     textSize(25);
-    text("Turn: " + turn, borderSize*3, borderSize/2);
+    text("Turn: " + turn, textLog.position[0] + 300, borderSize/2);
   }
   else if (currentTurn == defendTeam) {
     turn = "Defend Team"
     fill(0);
     textSize(25);
-    text("Turn: " + turn, borderSize*3, borderSize/2);
+    text("Turn: " + turn, textLog.position[0] + 300, borderSize/2);
   }
   else {
     fill(0);
     textSize(25);
-    text("Game Finished", borderSize*3, borderSize/2);
+    text("Game Finished", textLog.position[0] + 300, borderSize/2);
   }
 }
 
@@ -186,8 +200,8 @@ function mouseReleased() {
           canPlace = true;
         }
       }
-      if (canPlace && currentTurn != bot.team) {
-
+      // if (canPlace && currentTurn != bot.team) {
+      if (canPlace) {
         var previousPosition = [selectedPiece.previous_pos_x, selectedPiece.previous_pos_y];
 
         var newPosition = [x_pos, y_pos];
@@ -254,5 +268,14 @@ function newLog(previousPosition, newPosition, team, captures) {
 function moveBot() {
   if (currentTurn == bot.team) {
     bot.movePiece()
+  }
+}
+
+function oppositeTeam(team) {
+  if (team == attackTeam) {
+    return defendTeam;
+  }
+  else if (team == defendTeam) {
+    return attackTeam;
   }
 }

@@ -10,10 +10,20 @@ class Piece {
     this.type = normalPiece;
   }
 
+  clone() {
+    return new Piece(this.team, this.pos_x, this.pos_y);
+  }
+
   show() {
-    textAlign(CENTER, CENTER);
-    fill(0)
-    text(this.team, this.pos_x * tileSize + borderSize + tileSize/2, this.pos_y * tileSize + borderSize + tileSize/2)
+    // textAlign(CENTER, CENTER);
+    // fill(0)
+    // text(this.team, this.pos_x * tileSize + borderSize + tileSize/2, this.pos_y * tileSize + borderSize + tileSize/2)
+    if (this.team == attackTeam) {
+      image(attackPieceImg, this.pos_x * tileSize + borderSize, this.pos_y * tileSize + borderSize, tileSize, tileSize)
+    }
+    else if (this.team == defendTeam) {
+      image(defendPieceImg, this.pos_x * tileSize + borderSize, this.pos_y * tileSize + borderSize, tileSize, tileSize)
+    }
   }
 
   getPossibleCells() {
@@ -21,7 +31,7 @@ class Piece {
     var possibleCells = [];
     var blocked = false;
     for (var i = this.pos_x+1; i < boardSize; i++) {
-      if (!(board.getPosition([i, this.pos_y]) || blocked) || (this.type == kingPiece && board.board[i][this.pos_y] == hostileCell)) {
+      if (!(board.getPosition([i, this.pos_y]) || blocked) || (this.type == kingPiece && board.board[i][this.pos_y] == hostileCell && !blocked)) {
         possibleCells.push([i, this.pos_y]);
       }
       else if (board.getPosition([i, this.pos_y])) {
@@ -31,7 +41,7 @@ class Piece {
 
     blocked = false;
     for (var i = this.pos_x-1; i >= 0; i--) {
-      if (!(board.getPosition([i, this.pos_y]) || blocked) || (this.type == kingPiece && board.board[i][this.pos_y] == hostileCell)) {
+      if (!(board.getPosition([i, this.pos_y]) || blocked) || (this.type == kingPiece && board.board[i][this.pos_y] == hostileCell && !blocked)) {
         possibleCells.push([i, this.pos_y]);
       }
       else if (board.getPosition([i, this.pos_y])) {
@@ -41,7 +51,7 @@ class Piece {
 
     blocked = false;
     for (var i = this.pos_y+1; i < boardSize; i++) {
-      if (!(board.getPosition([this.pos_x, i]) || blocked) || (this.type == kingPiece && board.board[this.pos_x][i] == hostileCell)) {
+      if (!(board.getPosition([this.pos_x, i]) || blocked) || (this.type == kingPiece && board.board[this.pos_x][i] == hostileCell && !blocked)) {
         possibleCells.push([this.pos_x, i]);
       }
       else if (board.getPosition([this.pos_x, i])) {
@@ -51,7 +61,7 @@ class Piece {
 
     blocked = false;
     for (var i = this.pos_y-1; i >= 0; i--) {
-      if (!(board.getPosition([this.pos_x, i]) || blocked) || (this.type == kingPiece && board.board[this.pos_x][i] == hostileCell)) {
+      if (!(board.getPosition([this.pos_x, i]) || blocked) || (this.type == kingPiece && board.board[this.pos_x][i] == hostileCell && !blocked)) {
         possibleCells.push([this.pos_x, i]);
       }
       else if (board.getPosition([this.pos_x, i])) {
@@ -97,9 +107,14 @@ class King extends Piece {
     this.type = kingPiece;
   }
 
+  clone() {
+    return new King(this.pos_x, this.pos_y);
+  }
+
   show() {
-    textAlign(CENTER, CENTER);
-    fill(0)
-    text(this.team + "K", this.pos_x * tileSize + borderSize + tileSize/2, this.pos_y * tileSize + borderSize + tileSize/2)
+    // textAlign(CENTER, CENTER);
+    // fill(0)
+    // text(this.team + "K", this.pos_x * tileSize + borderSize + tileSize/2, this.pos_y * tileSize + borderSize + tileSize/2)
+    image(kingImg, this.pos_x * tileSize + borderSize, this.pos_y * tileSize + borderSize, tileSize, tileSize)
   }
 }

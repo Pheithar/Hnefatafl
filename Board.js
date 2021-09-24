@@ -1,9 +1,8 @@
 class Board {
-  constructor() {
+  constructor(notCloned=false) {
     this.attackPieces = [];
     this.defendPieces = [];
     this.board = [];
-
 
     for (var i = 0; i < boardSize; i++) {
       this.board.push([]);
@@ -17,7 +16,29 @@ class Board {
       }
     }
 
-    this.setupPieces();
+    if (!notCloned) {
+      this.setupPieces();
+    }
+  }
+
+  clone() {
+    var newBoard = new Board(true);
+
+    for (var i = 0; i < this.attackPieces.length; i++) {
+      newBoard.attackPieces.push(this.attackPieces[i].clone());
+      newBoard.board[this.attackPieces[i].pos_x][this.attackPieces[i].pos_y] = attackTeam;
+    }
+
+    for (var i = 0; i < this.defendPieces.length; i++) {
+      newBoard.defendPieces.push(this.defendPieces[i].clone());
+      newBoard.board[this.defendPieces[i].pos_x][this.defendPieces[i].pos_y] = defendTeam;
+      if (this.defendPieces[i].type == kingPiece) {
+        newBoard.king = this.defendPieces[i];
+      }
+    }
+
+    return newBoard;
+
   }
 
   setupPieces() {
