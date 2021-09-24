@@ -6,7 +6,7 @@
 
 In this game, there are 2 teams with opposing objectives. The attack team, the one that starts, has as goal to capture the *King*, while the defending team tries to put the *King* to safety.
 
-There are only 2 different types of pieces: normal pieces, or as I like to call them, *Soldiers*, and the *king*, which is the piece that starts at the center, and there is only 1.
+There are only 2 different types of pieces: normal pieces, or as I like to call them, *Soldiers*, and the *King*, which is the piece that starts at the center, and there is only 1.
 
 In their turn, each player can move one piece. The pieces move only horizontally and vertically, but as many cells as they wat, without going through another piece, just like rook in chess. 
 
