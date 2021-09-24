@@ -4,7 +4,7 @@
 
 **Hnefatafl**, also known as viking chess, is an easy to learn difficult to master game, just like regular chess.
 
-In this game, there are 2 teams with opposing objectives. The attack team, the one that starts, has as objective to capture the *King*, while the defending team tries to put the *King* to safety.
+In this game, there are 2 teams with opposing objectives. The attack team, the one that starts, has as goal to capture the *King*, while the defending team tries to put the *King* to safety.
 
 There are only 2 different types of pieces: normal pieces, or as I like to call them, *Soldiers*, and the *king*, which is the piece that starts at the center, and there is only 1.
 
