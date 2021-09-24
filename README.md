@@ -2,7 +2,7 @@
 
 ## Rules
 
-**Hnefatafl**, also known as viking chess, is an easy to learn difficoult to master game, just like regular chess.
+**Hnefatafl**, also known as viking chess, is an easy to learn difficult to master game, just like regular chess.
 
 In this game, there are 2 teams with opposing objectives. The attack team, the one that starts, has as objective to capture the *King*, while the defending team tries to put the *King* to safety.
 
